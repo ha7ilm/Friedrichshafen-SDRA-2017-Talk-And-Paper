@@ -75,6 +75,9 @@
 			<div class="slides" >
 				<section data-background="bgtest1notree.jpg">
 					<img src="fr3/title.png" class="noborder" style="position: relative; top: 20px;">
+                    <aside class="notes">
+						I'm going to talk about my experiments about writing BPSK31 and Radioteletype demodulators, and what I learnt from these experiments.
+                    </aside>
 				</section>
 				<!--<section data-background="bglake.jpg">
 					<img src="fr2-old-owx-screenshot.png" class="noborder" style="width: 90%;" />
@@ -82,14 +85,14 @@
 				<section data-background="bglake.jpg" style="width: 114%; left: -7%;">
                     <img src="fr3/openwebrx-screenshot.png" class="noborder" style="width: 100%;" />
                     <aside class="notes">
-                        Hello everyone! My name is Andras. 
-                        As an introduction, two years ago, I had the chance to present here about my open source project, OpenWebRX, an open source SDR application that has a web user interface. It looks like this. It allows ham radio operators to share their receiver with the world over the Internet. 
+						As an introduction, my main motivation to work on this was OpenWebRX. 
+						OpenWebRX is an open source web-based SDR receiver application, that allows ham radio operators to set up remote receivers. 
                     </aside>
 				</section>
 				<section data-background="bglake.jpg">
                     <img src="fr3/map.png" style="width: 100%;" class="noborder" />
                     <aside class="notes">
-                        Currently over a hundred stations are available online on my website, http://SDR.hu. 
+						Right now there are more than 140 publicly available receivers based on OpenWebRX on my website.
                     </aside>
 				</section>
 				<section data-background="bglake.jpg">
@@ -99,9 +102,7 @@
                         <img src="fr3/fldigi-slide.png" data-fragment-index="1" class="noborder fragment fade-up" style="width: 100%;"/>
                     </div>
                     <aside class="notes">
-                        This talk will mainly focus on BPSK31 and radioteletype, which I suppose that you're all familiar with. So why did I want to implement demodulators for these modes? 
-                        If someone wanted to decode digital modes, he needed to use an external modem software like Fldigi, and virtual audio cable drivers. This is quite inconvenient, also the audio is streamed in a compressed form, so the dynamic range of the audio signal is somewhat decreased. 
-                        My main motivation was to integrate these demodulators directly into OpenWebRX. 
+						The problem with OpenWebRX is that it did not support digital modes until recently. You had to use a digital modem software like Fldigi, and connect it through e.g. Virtual Audio Cable to OpenWebRX, which is quite an effort for beginner users. Also OpenWebRX uses lossy audio compression between the server and the client, so that the signal to noise ratio at Fldigi is a bit decreased. To solve that, the demodulator needs to be put at the server side. 
                     </aside>
 				</section>
 				<section data-background="bglake.jpg">
@@ -111,101 +112,409 @@
                         <img src="fr3/csdr-terminal.png" data-fragment-index="1" class="noborder fragment fade-up" style="width: 100%;"/>
                     </div>
                     <aside class="notes">
-                       I also wanted to add make the components of my demodulator reuseable, using the same tool that does DSP processing behing OpenWebRX, which is called CSDR. CSDR allows you to build simple data flow graphs in the command line. Here you can see an example command line for a wideband FM demodulator. Different processes carry out different functions, different stages of processing. When I first experimented with this approach, I was quite unsure that people will like this idea. However, last november I was contacted by someone at NASA JPL that they used this command line tool in their DSP pipeline to receive a Mars lander. 
+						The other motivation is adding digital mode support to CSDR. CSDR is the command line tool behind OpenWebRX which does the DSP. It can be used to build simple signal processing dataflows from the command line, like this command, which is a wide FM demodulator.
                     </aside>
 				</section>
 
-                <section data-transition="fade-in"> <img src="bpsk-1.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-24a.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-28d.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-28e.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-28f.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-30.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-31.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-32.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-33.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-34.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-35.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-36.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-37.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-38.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-39.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-40.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-40a.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-41.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-45.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-46.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-44.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
+                <section data-transition="fade-in"> <img src="bpsk-1.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						So what about BPSK31?
+						BPSK31 has been invented by Peter, G3PLX. 
+						One interesting thing is that it uses differential BPSK: it encodes the bits into the phase changes instead of the phase states itself.
+						Also the characters are encoded in Varicode, which is a variable length code that maps those letters to shorter codes that are more common in the English language.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-24a.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						So how do we demodulate BPSK31?
+						If we have an SDR hardware, we usually get a few Msps I/Q signal from it, from which we need to select a single channel that contains only our BPSK signal.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-28d.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						At this point the signal will still be oversampled. We need to decimate it with the correct phase, finding the samples corresponding to the maximum power of each symbol. For example, here we selected the samples at the red lines, and these can be used to decide if it is a zero or a one symbol. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-28e.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						However, if we have some additive noise and we sample at the wrong phase, we get a different series of bits. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-28f.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						That's what symbol timing recovery agorithms are there for to fix. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-30.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						These are a few algorithms that are in the textbooks. I tried two of them, the early-late gate and the Gardner. Of course there are many other, more advanced ones. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-31.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						So how do these work?
+						Very breifly, these implement a control loop, readjusting the phase step in each iteration. 
+						We start from somewehere on the signal. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-32.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						Sample, and move to the next bit in each iteration.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-33.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						But in each iteration, we calculate the error based on our "environment". 
+						This is the early-late gate timing error detector formula, as in the textbooks, which looks creepy. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-34.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						It really just puts two other points on the signal around the sampling point, and calculates the error based on the values of the samples at those points. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-35.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						This is a simplified formula, which you will never find in textbooks. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-36.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						Based on the error, we update our step size. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-37.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						In the next step, we calculate the error again.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-38.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						We update the step size again. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-39.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						We update the step size again. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-40.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						We update the step size again. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-40a.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+					<aside class="notes">
+						We move to the next bit. 
+					</aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-41.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						Here are the formulas for some timing error detectors.
+						The last two ones include the symbol decision, that's why they are decision-directed.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-45.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						And this is the syntax of the CSDR implementation. 
+						Additionally, the internal operation of the algorithm can be visualized with GNU Octave. If you have been trying to tune the Muller & Mueller clock recovery block in GNU Radio, then you might know that it's like a black box. You can see its input and its output, but only hardly imagine how it operates internally, if it did lock on the signal correctly or not.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-46.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						And this is the syntax of the CSDR implementation. 
+						Additionally, the internal operation of the algorithm can be visualized with GNU Octave. If you have been trying to tune the Muller & Mueller clock recovery block in GNU Radio, then you might know that it's like a black box. You can see its input and its output, but only hardly imagine how it operates internally, if it did lock on the signal correctly or not.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-44.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						This is the Gardner TED. 
+						The left red dot is the sampling point, and the algorithm tries to move the middle dot to the middle of the symbol transition.
+                    </aside>
+				</section>
                 <section data-transition="fade-in"> 
                     <img src="gardner.gif"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> 
-                </section>
-                <!--<section data-transition="fade-in"> <img src="bpsk-43.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>-->
-                <section data-transition="fade-in"> <img src="bpsk-47.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-48.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-49.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-50.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-51.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-52.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-53.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-54.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-54a.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-55.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-56.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-58.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-59.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-62.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-63.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-64.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-65.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-66.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-68.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-69.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-70.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-71.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-72.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
+                    <aside class="notes">
+						This is how the Gardner algorithm is visualized with CSDR and Octave, while locking on the preamble.
+						The middle dot is getting close to the edge between the symbols.
+						Now we're past the preamble, decoding some data.
+                    </aside>
+				</section>
+                <!--<section data-transition="fade-in"> <img src="bpsk-43.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+				</section>-->
+                <section data-transition="fade-in"> <img src="bpsk-47.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						The other problem that we face during demodulation is the frequency difference between the transmitter and the receiver. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-48.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						If we are not very precisely tuned to the center of the signal with the receiver, then we get a complex baseband signal like this (in the time domain).
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-49.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						And this is a BPSK31 signal with an even higher frequency difference.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-50.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						So to recover this frequency difference, and compensate for that, we need the carrier recovery algorithms. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-51.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						My first try on this was a Costas loop.
+						However, if the user clicked just a few pixels away from the BPSK31 signal on the UI, it can cause around 40-50% of frequency difference compared to the whole signal bandwidth, and that's a problem. If you increase the loop bandwidth much, then the tracking variance will be worse, and things like that.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-52.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						I also became aware that there is a way to demodulate BPSK using the last two samples. It has a few dB penalty, but it was still better in my experiments, and it is less prone to frequency errors. So it works like this:
+						Let's assume that this was the last sample. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-53.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						If the current sample is in this range, then there we assume that there was no 180 degrees phase change.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-54.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						...and if it's in this range, then there was a 180 degrees phase change.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-54a.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+Now we have our bits. We push them into a FIFO, and if we see a valid varicode character delimited by two zeros at both ends (as two consecutive zeros are not part of any varicode code), then we output the ASCII character corresponding to it.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-55.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+Now we have our bits. We push them into a FIFO, and if we see a valid varicode character delimited by two zeros at both ends (as two consecutive zeros are not part of any varicode code), then we output the ASCII character corresponding to it.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-56.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+Now we have our bits. We push them into a FIFO, and if we see a valid varicode character delimited by two zeros at both ends (as two consecutive zeros are not part of any varicode code), then we output the ASCII character corresponding to it.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-58.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+Now we have our bits. We push them into a FIFO, and if we see a valid varicode character delimited by two zeros at both ends (as two consecutive zeros are not part of any varicode code), then we output the ASCII character corresponding to it.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-59.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+Now we have our bits. We push them into a FIFO, and if we see a valid varicode character delimited by two zeros at both ends (as two consecutive zeros are not part of any varicode code), then we output the ASCII character corresponding to it.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-62.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+Now we have our bits. We push them into a FIFO, and if we see a valid varicode character delimited by two zeros at both ends (as two consecutive zeros are not part of any varicode code), then we output the ASCII character corresponding to it.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-63.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+Now we have our bits. We push them into a FIFO, and if we see a valid varicode character delimited by two zeros at both ends (as two consecutive zeros are not part of any varicode code), then we output the ASCII character corresponding to it.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-64.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+					<aside class="notes">
+Now we have our bits. We push them into a FIFO, and if we see a valid varicode character delimited by two zeros at both ends (as two consecutive zeros are not part of any varicode code), then we output the ASCII character corresponding to it.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-65.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						So this is the command for our BPSK31 demodulator. 
+						You can see the processing blocks I've been talking about, like the downconverter, the timing recovery, the DBPSK demodulator and the Varicode decoder. 
+						Both the timing recovery and the DBPSK demodulator blocks are less prone to the frequency error, so I consider this a very simple way to implement a working BPSK31 demodulator (while probably not the highest quality).
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-66.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						What I really like about this approach is that supporting BPSK63 is just a matter of changing a a few numbers in the command. E.g. we could make BPSK1Megabit, if we had sufficient SDR hardware for that.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-68.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						This is the BPSK63 demodulator in action.
+						This is the command, and this is the data output.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-69.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						This is the BPSK63 demodulator in action.
+						This is the command, and this is the data output.
+</aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-70.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						We can also easily derive new modes by changing the command. 
+						While not emphasized previously, CSDR can also transmit BPSK31. 
+						In this example, I've decided to add the industry standard root-raised cosine pulse shaping filters to the BPSK31 transmitter and receiver for better intersymbol interference elimination. Originally, BPSK31 uses a cosine pulse shape.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-71.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						This is how the RRC filtered BPSK31 signal looks like, and we can see the raised cosine pulse shape below, with zero value at the neighbouring symbols.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-72.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						This is how the RRC filtered BPSK31 signal looks like, and we can see the raised cosine pulse shape below, with zero value at the neighbouring symbols.
+                    </aside>
+				</section>
                 <section data-transition="fade-in">  
                     <video controls>
                         <source data-src="bpsk31.webm" type="video/webm" />
                     </video>
-                </section>
-                <!--<section data-transition="fade-in"> <img src="bpsk-73.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>-->
-                <section data-transition="fade-in"> <img src="bpsk-74.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-75.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <!--<section data-transition="fade-in"> <img src="bpsk-75a.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>-->
-                <section data-transition="fade-in"> <img src="bpsk-75b.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-79.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-81.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <!--<section data-transition="fade-in"> <img src="bpsk-82.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>-->
-                <!--<section data-transition="fade-in"> <img src="bpsk-83.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>-->
-                <!--<section data-transition="fade-in"> <img src="bpsk-84.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>-->
-                <!--<section data-transition="fade-in"> <img src="bpsk-85.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>-->
-                <!--<section data-transition="fade-in"> <img src="bpsk-86.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>-->
-                <!--<section data-transition="fade-in"> <img src="bpsk-87.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>-->
-                <section data-transition="fade-in"> <img src="bpsk-88d.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-89d.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-90d.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-91d.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-92d.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-93.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <!--<section data-transition="fade-in"> <img src="bpsk-94.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>-->
-                <section data-transition="fade-in"> <img src="bpsk-95d.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-96.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-97.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-98.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <!--<section data-transition="fade-in"> <img src="bpsk-99.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>-->
-                <section data-transition="fade-in"> <img src="bpsk-105.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-106.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-107.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-108.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-109.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
-                <section data-transition="fade-in"> <img src="bpsk-111.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/> </section>
+                    <aside class="notes">
+						In this video we can see a BPSK31 QSO received with OpenWebRX.
+                    </aside>
+				</section>
+                <!--<section data-transition="fade-in"> <img src="bpsk-73.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+				</section>-->
+                <section data-transition="fade-in"> <img src="bpsk-74.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						So these are the new controls on the interface.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-75.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						So these are the new controls on the interface.
+                    </aside>
+				</section>
+                <!--<section data-transition="fade-in"> <img src="bpsk-75a.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+				</section>-->
+                <section data-transition="fade-in"> <img src="bpsk-75b.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+This is an excerpt from the code of OpenWebRX (csdr.py), in which you can see the BPSK31 demodulator command, and also some functions that calculate various parameters used in this command. That's one of the few places where you have to modify the code to add new modes.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-79.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+This is an excerpt from the code of OpenWebRX (csdr.py), in which you can see the BPSK31 demodulator command, and also some functions that calculate various parameters used in this command. That's one of the few places where you have to modify the code to add new modes.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-81.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+Let's talk about Radioteletype.
+As you can see, it is plain FSK, and a 5-bit code called Baudot code is used for the characters.
+                    </aside>
+				</section>
+                <!--<section data-transition="fade-in"> <img src="bpsk-82.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+				</section>-->
+                <!--<section data-transition="fade-in"> <img src="bpsk-83.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+				</section>-->
+                <!--<section data-transition="fade-in"> <img src="bpsk-84.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+				</section>-->
+                <!--<section data-transition="fade-in"> <img src="bpsk-85.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+				</section>-->
+                <!--<section data-transition="fade-in"> <img src="bpsk-86.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+				</section>-->
+                <!--<section data-transition="fade-in"> <img src="bpsk-87.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+				</section>-->
+                <section data-transition="fade-in"> <img src="bpsk-88d.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						This is one type of FSK demodulator that I have implemented. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-89d.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						It starts with two bandpass filters for the mark and space frequencies. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-90d.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						It follows by calculating the signal power. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-91d.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						Then subtracting the power of the two branches.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-92d.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						And here we go, we can go on with symbol timing synchronization and extract the bits.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-93.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						Now Radioteletype is quite like UART, it's synchronized with a start bit, then 5 data bits are sampled, and then comes a stop bit. I've done a universal serial decoder block that you could also use on a UART line sampled with an ADC. Here it is used for RTTY.
+                    </aside>
+				</section>
+                <!--<section data-transition="fade-in"> <img src="bpsk-94.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+				</section>-->
+                <section data-transition="fade-in"> <img src="bpsk-95d.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						So this is the command that decodes RTTY from the audio card.
+						You can see the FSK demodulator block here, and the serial line decoder, then a baudot code decoder. 
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-96.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						And this is it in action.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-97.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						That's the command, and that's the output.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-98.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						Now, to verify that my algorithms are general enough, I decided that I would demodulate a signal sent by an RF SoC used in many products, like the Texas Instruments CC1111. I had a YARD Stick One by Great Scott Gadgets to try.
+                    </aside>
+				</section>
+                <!--<section data-transition="fade-in"> <img src="bpsk-99.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+				</section>-->
+                <section data-transition="fade-in"> <img src="bpsk-105.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						This is the command that decodes the packets sent by the YARD Stick.
+						It reads the input from the RTL-SDR.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-106.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						This first part is the FSK demodulator.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-107.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						I used the same clock recovery that I did for PSK31, and also the Octave visualization to verify that it actually locks on the signal.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-108.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+Then here is that part that looks for the packets.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-109.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						Now this is it in action.
+                    </aside>
+				</section>
+                <section data-transition="fade-in"> <img src="bpsk-111.png"  class="noborder" style="width: 100%; position: relative; top: -30px;"/>
+                    <aside class="notes">
+						I've sent 100 packets with the YARD stick, and successfully decoded them.
+                    </aside>
+				</section>
                 <section data-background="bglake.jpg" data-transition="fade-in">  
                     <video controls>
                         <source data-src="3d-waterfall.webm" type="video/webm" />
                     </video>
+                    <aside class="notes">
+						Now some less related news I want to show you about OpenWebRX.
+						It also has a 3D waterfall diagram now, and it is possible to zoom the secondary waterfall diagram by moving the filter edges.
+                    </aside>
                 </section>
 				<section  data-background="bglake.jpg" data-transition="fade-in">
 					<img class="noborder" src="sdrhu-logo-main-wb.png">
+                    <aside class="notes">
+						That's all I wanted to show today. You can find more about this work on my website. My Master's thesis on this topic is available on my blog.
+                    </aside>
 				</section>
 			</div>
 
